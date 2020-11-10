@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0i5lnlp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:process id="human-life-cycle-today" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1dir4q5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1dir4q5" sourceRef="StartEvent_1" targetRef="enter-the-school" />
+    <bpmn:serviceTask id="enter-the-school" name="Enter the school" camunda:type="external" camunda:topic="enter-the-school">
+      <bpmn:incoming>Flow_1dir4q5</bpmn:incoming>
+      <bpmn:outgoing>Flow_02j2tep</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_02j2tep" sourceRef="enter-the-school" targetRef="face-university-entrance-exam" />
+    <bpmn:serviceTask id="face-university-entrance-exam" name="Face examination" camunda:type="external" camunda:topic="face-university-entrance-exam">
+      <bpmn:incoming>Flow_02j2tep</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s3mk91</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1iiju7h" name="Exam result">
+      <bpmn:incoming>Flow_0s3mk91</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hswvnr</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1m4a2ah</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0s3mk91" sourceRef="face-university-entrance-exam" targetRef="Gateway_1iiju7h" />
+    <bpmn:sequenceFlow id="Flow_1hswvnr" name="examPass" sourceRef="Gateway_1iiju7h" targetRef="enter-the-university">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${examPass}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="enter-the-university" name="Enter the university" camunda:type="external" camunda:topic="enter-the-university">
+      <bpmn:incoming>Flow_1hswvnr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0g1orww</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1m4a2ah" name="examFail" sourceRef="Gateway_1iiju7h" targetRef="join-home-business">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not examPass}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="join-home-business" name="Join home business" camunda:type="external" camunda:topic="join-home-business">
+      <bpmn:incoming>Flow_1m4a2ah</bpmn:incoming>
+      <bpmn:outgoing>Flow_15j6qcl</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0g1orww" sourceRef="enter-the-university" targetRef="do-the-job" />
+    <bpmn:sequenceFlow id="Flow_15j6qcl" sourceRef="join-home-business" targetRef="do-the-job" />
+    <bpmn:endEvent id="Event_1v0zdll">
+      <bpmn:incoming>Flow_1ddok4m</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1ddok4m" sourceRef="do-the-job" targetRef="Event_1v0zdll" />
+    <bpmn:serviceTask id="do-the-job" name="Do the job" camunda:type="external" camunda:topic="do-the-job">
+      <bpmn:incoming>Flow_0g1orww</bpmn:incoming>
+      <bpmn:incoming>Flow_15j6qcl</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ddok4m</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="human-life-cycle-today">
+      <bpmndi:BPMNEdge id="Flow_1dir4q5_di" bpmnElement="Flow_1dir4q5">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02j2tep_di" bpmnElement="Flow_02j2tep">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s3mk91_di" bpmnElement="Flow_0s3mk91">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="595" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hswvnr_di" bpmnElement="Flow_1hswvnr">
+        <di:waypoint x="620" y="142" />
+        <di:waypoint x="620" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="624" y="183" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1m4a2ah_di" bpmnElement="Flow_1m4a2ah">
+        <di:waypoint x="645" y="117" />
+        <di:waypoint x="760" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="681" y="99" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g1orww_di" bpmnElement="Flow_0g1orww">
+        <di:waypoint x="670" y="310" />
+        <di:waypoint x="760" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15j6qcl_di" bpmnElement="Flow_15j6qcl">
+        <di:waypoint x="810" y="157" />
+        <di:waypoint x="810" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ddok4m_di" bpmnElement="Flow_1ddok4m">
+        <di:waypoint x="860" y="310" />
+        <di:waypoint x="952" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0s0l9pg_di" bpmnElement="enter-the-school">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mz2uxh_di" bpmnElement="face-university-entrance-exam">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1iiju7h_di" bpmnElement="Gateway_1iiju7h" isMarkerVisible="true">
+        <dc:Bounds x="595" y="92" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="590" y="73" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06aytlw_di" bpmnElement="enter-the-university">
+        <dc:Bounds x="570" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07ekmhz_di" bpmnElement="join-home-business">
+        <dc:Bounds x="760" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v0zdll_di" bpmnElement="Event_1v0zdll">
+        <dc:Bounds x="952" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wy830l_di" bpmnElement="do-the-job">
+        <dc:Bounds x="760" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
