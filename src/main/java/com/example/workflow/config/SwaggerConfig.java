@@ -30,7 +30,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("Camunda Testing")
                 .description("Camunda testing for developers")
-                .termsOfServiceUrl("http://javainuse.com")
+                .termsOfServiceUrl("http://gayanAberathna.com")
                 .contact("hrkgayan@gmail.com").license("Gayan Aberathna License")
                 .licenseUrl("hrkgayan@gmail.com").version("1.0").build();
     }
